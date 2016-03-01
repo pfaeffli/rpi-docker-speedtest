@@ -1,0 +1,47 @@
+<div class="jumbotron">
+  <h1>Local Internet Speeds</h1>
+  <p>Checks are performed every 30 minutes</p>
+  <a href="/speeds.csv">Download file</a>
+</div>
+<div class="starter-template">
+  <canvas id="myChart" width="1000" height="400"></canvas>
+  <script>
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var graphdata = {
+      labels: <%- JSON.stringify(data[0]) %>,
+      datasets: [
+          {
+              label: "Ping (ms)",
+              fillColor: "rgba(230, 24, 24, 0.34)",
+              strokeColor: "rgba(238, 143, 143, 1)",
+              pointColor: "rgba(195, 59, 59, 1)",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(170, 46, 46, 1)",
+              data: [<%= data[1] %>]
+          },
+          {
+              label: "Download (MBit/s)",
+              fillColor: "rgba(99, 232, 17, 0.27)",
+              strokeColor: "rgba(110, 180, 82, 1)",
+              pointColor: "rgba(110, 201, 60, 1)",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(137, 244, 116, 1)",
+              data: [<%= data[2] %>]
+          },
+          {
+              label: "Upload (MBit/s)",
+              fillColor: "rgba(24, 154, 219, 0.35)",
+              strokeColor: "rgba(86, 159, 205, 1)",
+              pointColor: "rgba(65, 120, 215, 1)",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(140, 217, 255, 1)",
+              data: [<%= data[3] %>]
+          }
+      ]
+    };
+    var myLineChart = new Chart(ctx).Line(graphdata, {});
+  </script>
+</div>

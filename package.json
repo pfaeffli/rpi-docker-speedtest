@@ -1,0 +1,14 @@
+{
+  "name": "speed-ui",
+  "version": "0.1.0",
+  "description": "Speed Test Server",
+  "author": "Felix Geilert <root92@live.de>",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "2.x.x",
+    "ejs": "0.7.x"
+  }
+}

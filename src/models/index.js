@@ -1,0 +1,1 @@
+exports.measures = require('./speed');
