@@ -4,44 +4,84 @@
   <a href="/speeds.csv">Download file</a>
 </div>
 <div class="starter-template">
+  <div>
+    <span id="button-list"></span>
+  </div>
   <canvas id="myChart" width="1000" height="400"></canvas>
   <script>
+
+    var d_labels = <%- JSON.stringify(data[0]) %>;
+    var d_pings = [<%= data[1] %>];
+    var d_downs = [<%= data[2] %>];
+    var d_ups = [<%= data[3] %>];
     var ctx = document.getElementById("myChart").getContext("2d");
+    var split = 48;
+
+    // select the button list
+    var btns = document.getElementById("button-list");
+    for(i=0; i<d_labels.length; i=i+split) {
+      var btn = document.createElement('button');
+      btn.setAttribute("type", "button");
+      var last = d_labels[d_labels.length - 1];
+      if(d_labels.length > i + split) last = d_labels[i+split];
+      btn.innerHTML = d_labels[i] + " - " + last;
+      btn.setAttribute("class", "btn btn-default");
+      btn.setAttribute("onclick", "drawGraph(" + i.toString() + ", " + (i + split).toString() + ");");
+      btns.appendChild(btn);
+    }
+
+    // create the graph
+    var s = d_labels.length - split;
+    if (s < 0) s=0;
+    var e = d_labels.length;
     var graphdata = {
-      labels: <%- JSON.stringify(data[0]) %>,
+      labels: d_labels.slice(s, e),
       datasets: [
           {
               label: "Ping (ms)",
-              fillColor: "rgba(230, 24, 24, 0.34)",
+              fillColor: "rgba(222, 150, 150, 0.5)",
               strokeColor: "rgba(238, 143, 143, 1)",
               pointColor: "rgba(195, 59, 59, 1)",
               pointStrokeColor: "#fff",
               pointHighlightFill: "#fff",
               pointHighlightStroke: "rgba(170, 46, 46, 1)",
-              data: [<%= data[1] %>]
+              data: d_pings.slice(s, e)
           },
           {
               label: "Download (MBit/s)",
-              fillColor: "rgba(99, 232, 17, 0.27)",
+              fillColor: "rgba(99, 232, 17, 0.63)",
               strokeColor: "rgba(110, 180, 82, 1)",
               pointColor: "rgba(110, 201, 60, 1)",
               pointStrokeColor: "#fff",
               pointHighlightFill: "#fff",
               pointHighlightStroke: "rgba(137, 244, 116, 1)",
-              data: [<%= data[2] %>]
+              data: d_downs.slice(s, e)
           },
           {
               label: "Upload (MBit/s)",
-              fillColor: "rgba(24, 154, 219, 0.35)",
+              fillColor: "rgba(24, 154, 219, 0.60)",
               strokeColor: "rgba(86, 159, 205, 1)",
               pointColor: "rgba(65, 120, 215, 1)",
               pointStrokeColor: "#fff",
               pointHighlightFill: "#fff",
               pointHighlightStroke: "rgba(140, 217, 255, 1)",
-              data: [<%= data[3] %>]
+              data: d_ups.slice(s, e)
           }
       ]
     };
-    var myLineChart = new Chart(ctx).Line(graphdata, {});
+    var myLineChart = new Chart(ctx).Line(graphdata, {animationSteps: 15});
+
+    // update the graph
+    function drawGraph(start, end) {
+      var i = start;
+      var id = 0;
+      var draw = function(){
+        myLineChart.addData([d_pings[i], d_downs[i], d_ups[i]], d_labels[i]);
+        myLineChart.removeData();
+        i++;
+        if(i>=end || i >= d_labels.length) clearInterval(id);
+      }
+      id = setInterval(draw, 150);
+    };
   </script>
 </div>
