@@ -7,15 +7,16 @@
   <div>
     <span id="button-list"></span>
   </div>
-  <canvas id="myChart" width="1000" height="400"></canvas>
+  <canvas id="myChart" width="1100" height="400"></canvas>
   <script>
-
+    // the data
     var d_labels = <%- JSON.stringify(data[0]) %>;
     var d_pings = [<%= data[1] %>];
     var d_downs = [<%= data[2] %>];
     var d_ups = [<%= data[3] %>];
-    var ctx = document.getElementById("myChart").getContext("2d");
-    var split = 48;
+
+    // setting
+    var split = 24;
 
     // select the button list
     var btns = document.getElementById("button-list");
@@ -23,10 +24,17 @@
       var btn = document.createElement('button');
       btn.setAttribute("type", "button");
       var last = d_labels[d_labels.length - 1];
-      if(d_labels.length > i + split) last = d_labels[i+split];
-      btn.innerHTML = d_labels[i] + " - " + last;
+      var first = i;
+      if(d_labels.length > i + split) {
+        last = d_labels[i+split];
+      }
+      else {
+        first = d_labels.length - split;
+        if (first < 0) first = 0;
+      }
+      btn.innerHTML = d_labels[first] + " - " + last;
       btn.setAttribute("class", "btn btn-default");
-      btn.setAttribute("onclick", "drawGraph(" + i.toString() + ", " + (i + split).toString() + ");");
+      btn.setAttribute("onclick", "drawGraph(" + first.toString() + ", " + (i + split).toString() + ");");
       btns.appendChild(btn);
     }
 
@@ -69,6 +77,7 @@
           }
       ]
     };
+    var ctx = document.getElementById("myChart").getContext("2d");
     var myLineChart = new Chart(ctx).Line(graphdata, {animationSteps: 15});
 
     // update the graph
