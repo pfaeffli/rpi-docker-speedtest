@@ -32,7 +32,7 @@
         first = d_labels.length - split;
         if (first < 0) first = 0;
       }
-      btn.innerHTML = d_labels[first] + " - " + last;
+      btn.innerHTML = d_labels[first] + " <=> " + last;
       btn.setAttribute("class", "btn btn-default");
       btn.setAttribute("onclick", "drawGraph(" + first.toString() + ", " + (i + split).toString() + ");");
       btns.appendChild(btn);

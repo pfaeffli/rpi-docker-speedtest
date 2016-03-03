@@ -13,7 +13,9 @@ exports.last = function(interval, done) {
       if(line.length > 0) {
         var items = line.split(';');
         if(items.length >= 4) {
-          res[0].push(items[0].toString());
+          var times = items[0].toString().replace('  ', ' ').split(' ');
+          var clock = times[3].split(':');
+          res[0].push(times[2] + '-' + times[1] + '-' + times[4] + ' ' + (parseInt(clock[0]) + 1).toString() + ':' + clock[1] + ' [' + times[0] + ']');
           res[1].push(items[1]);
           res[2].push(items[2]);
           res[3].push(items[3]);
