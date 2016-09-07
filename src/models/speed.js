@@ -10,7 +10,7 @@ exports.last = function(interval, done) {
     if (lines.length > 250) start = lines.length - 251;
     for (i = start; i < lines.length; i++) {
       var line = lines[i];
-      if(line.length > 0) {
+      if(line && line.length > 0) {
         var items = line.split(';');
         if(items.length >= 4) {
           var times = items[0].toString().replace('  ', ' ').split(' ');
