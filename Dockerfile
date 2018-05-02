@@ -9,7 +9,7 @@ VOLUME /data
 # setup external volume for script
 RUN apt-get update ;\
     apt-get install python ;\
-    wget -O /app/speedtest-cli https://raw.github.com/sivel/speedtest-cli/master/speedtest_cli.py ;\
+    wget -O /app/speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py ;\
     chmod +x /app/speedtest-cli ;\
     touch /data/speeds.csv
 
