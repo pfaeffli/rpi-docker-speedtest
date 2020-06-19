@@ -1,5 +1,9 @@
-# docker-speedtest
+# [DEPRECATED] docker-speedtest
 Small Docker, Node.js and Python Application that will test the connection speed in regular intervals. (Note: Also runs on the raspberry pi)
+
+**🎉 NEW VERSION: 🎉**
+
+A new version of the tool is available: [Docker Speedtest V2](https://github.com/felixnext/docker-speedtest-v2)
 
 ## Docker image
 
