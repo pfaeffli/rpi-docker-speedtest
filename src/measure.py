@@ -16,6 +16,7 @@ def measure():
             f.write(time.ctime() + ";" + data[2] + ";" + data[6] + ";" + data[10] + "\n")
         except:
             f.write(time.ctime() + ";0;0;0\n")
+            
 def run():
     schedule.every().day.at("06:00").do(measure)
     schedule.every().day.at("12:00").do(measure)
