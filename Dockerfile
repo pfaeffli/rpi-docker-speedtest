@@ -18,7 +18,7 @@ RUN pip install git+https://github.com/sivel/speedtest-cli.git schedule;\
 # set the working dear to the app
 WORKDIR /app
 # install node packages / copy all source files
-ADD package.json /app/package.json
+COPY package.json /app/package.json
 COPY src/ /app/
 RUN cd /app && npm install
 
