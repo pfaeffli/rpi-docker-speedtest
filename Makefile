@@ -10,5 +10,7 @@ build:
 	docker build -t smarthome/speedtest .
 
 run:
-	docker run -d -p 9000:80 --name speedtest --restart unless-stopped -v $PWD/data:/data smarthome/speedtest:latest
+	docker run -d -p 9000:80 --name speedtest --restart unless-stopped -v $(PWD)/data:/data smarthome/speedtest:latest
 
+stop:
+	docker stop speedtest && docker rm speedtest
