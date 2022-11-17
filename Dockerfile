@@ -1,5 +1,5 @@
 #FROM hypriot/rpi-node:slim
-FROM node:latest
+FROM node:19-buster-slim
 
 RUN mkdir /app
 
@@ -7,11 +7,13 @@ RUN mkdir /app
 VOLUME /data
 
 # setup external volume for script
-RUN apt-get update ;\
-    apt-get install python ;\
-    wget -O /app/speedtest-cli https://raw.github.com/sivel/speedtest-cli/master/speedtest_cli.py ;\
-    chmod +x /app/speedtest-cli ;\
-    touch /data/speeds.csv
+RUN apt-get update \
+    && apt-get install -y python python-pip git \
+    && rm -rf /var/lib/apt/lists/* 
+
+RUN pip install git+https://github.com/sivel/speedtest-cli.git schedule;\
+    touch /data/speeds.csv ;\
+    speedtest-cli -h ;
 
 # set the working dear to the app
 WORKDIR /app
@@ -26,5 +28,5 @@ RUN cd /app && npm install
 # expose port for server
 EXPOSE 80
 # start the server as entry point
-ENTRYPOINT ["/bin/bash", "start.sh"]
+CMD ["/bin/bash", "start.sh"]
 #ENTRYPOINT ["python", "measure.py"]

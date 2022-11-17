@@ -23,3 +23,9 @@ The container can also run on the pi. To do so, change the first line of the doc
 4. Finally start the docker container using `docker run -d -p 80:80 --name speedtest -v /tmp/speed:/data felixnext/speedtest:latest`
 
 The service should now be running on the pi and be available through the PI's ip address.
+
+
+## RUM
+```
+docker run -d -p 9000:80 --name speedtest --restart unless-stopped -v $PWD/data:/data felixnext/speedtest:rpi
+```
