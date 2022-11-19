@@ -9,7 +9,7 @@ import schedule
 def measure():
     with open("/data/speeds.csv", "a") as f:
         try:
-            p = subprocess.Popen(['speedtest-cli', '--simple'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            p = subprocess.Popen(['speedtest-cli', '--secure', '--simple'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             out, err = p.communicate()
             # parse output
             data = re.split(r'(: | [mM])', out)
